@@ -3,11 +3,30 @@ import userServices from "../services/userServices.js";
 
 const createUser = async (req,res)=>{
 
-    const {userName,password,phone,email} = req.body
+    const {userName,password,phone,email,confirmPassword} = req.body
 
+    try{
+    if(!userName){
+        return res.status(400).json({message:"Please enter your name"})
+    }
+    if(!password){
+        return res.status(400).json({message:"Please enter your password"})
+    }
+    if(password !== confirmPassword){
+        return res.status(400).json({message:"Password and confirm password should be same"})
+    }
+``
     const data =  await  userServices.createUser(req.body)
     
-    res.send(data)
+    res.send(data)}
+        catch(error){
+        console.log(error.message)
+        res.status(400).json({
+            message:"Error in creating user",
+            error: error.message
+
+        })
+    }
 
 }
 

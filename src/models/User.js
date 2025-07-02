@@ -1,5 +1,4 @@
 
-
 import mongoose from "mongoose";
 
 
@@ -24,7 +23,7 @@ const userSchema =  new mongoose.Schema({
     role : {
         type : String,
         enum : ['ADMIN', 'CUSTOMER'],
-        default :['CUSTOMER']
+        default :'CUSTOMER'
     }
 
 },{
