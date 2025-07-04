@@ -25,6 +25,22 @@ const productSchema = new mongoose.Schema(
     processor: {
       type: String,
     },
+    gen: {
+      type: String,
+    },
+    brand: {
+      type: String,
+    },
+    use: {
+      type: String,
+      enum: [
+        "GAMING",
+        "PROFESSIONAL",
+        "STUDENT",
+        "PERFORMANCE",
+        "BUDGET",
+      ],
+    },
     stock: {
       type: Number,
       default: 0,
