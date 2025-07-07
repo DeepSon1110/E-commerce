@@ -3,6 +3,7 @@ import express from 'express';
 import connectDb from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import AuthRoute from './routes/AuthRoute.js';
 
 const app =  express();
 
@@ -22,6 +23,7 @@ app.get('/',(req,res)=>{
 
 app.use('/api',userRoutes )
 app.use("/api/product",productRoutes)
+app.use("/api/auth",AuthRoute)
 
 
 
