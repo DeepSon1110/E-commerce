@@ -1,3 +1,4 @@
+import { createToken } from "../helpers/token.js";
 import AuthService from "../services/AuthService.js";
 import jwt from 'jsonwebtoken';
 
@@ -51,7 +52,7 @@ try{
     email : data.email
   }
 
-  const token = jwt.sign(payload,"secretKey")
+  const token = createToken(payload)
   res.cookie('authToken',token)
 
   res.status(200).json({
