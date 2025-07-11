@@ -1,7 +1,6 @@
 import { createToken } from "../helpers/token.js";
 import AuthService from "../services/AuthService.js";
-import jwt from 'jsonwebtoken';
-
+import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
   try {
@@ -34,38 +33,49 @@ const register = async (req, res) => {
   }
 };
 
-const login = async(req,res) =>{
-try{
+const login = async (req, res) => {
+  try {
     //login function
-  const {email,password} = req.body
+    const { email, password } = req.body;
 
-  if(!email || !password){
-    throw new Error("User Crediential missing")
+    if (!email || !password) {
+      throw new Error("User Crediential missing");
+    }
+
+    const data = await AuthService.login({ email, password });
+
+    const payload = {
+      id: data._id,
+      userName: data.userName,
+      role: data.role,
+      email: data.email,
+    };
+
+    const token = createToken(payload);
+    res.cookie("authToken", token);
+
+    res.status(200).json({
+      message: "Login Successful",
+      data,
+      token,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send(error.message);
   }
+};
 
-  const data = await AuthService.login({email,password})
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      throw new Error("email is required");
+    }
+    const data = await AuthService.forgotPassword({ email });
 
-  const payload = {
-    id : data._id,
-    userName : data.userName,
-    role : data.role,
-    email : data.email
+    res.status(200).json({message:'otp sent successfullllllllllllly'}),data
+  } catch (error) {
+    console.log(error.message);
   }
-
-  const token = createToken(payload)
-  res.cookie('authToken',token)
-
-  res.status(200).json({
-    message : "Login Successful",
-    data,
-    token
-  })
-}
-catch(error){
-  console.log(error.message)
-    res.status(400).send(error.message)
-  
-}
-}
-
-export {register,login}
+};
+export { register, login,forgotPassword };
