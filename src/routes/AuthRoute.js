@@ -8,28 +8,65 @@ const router = express.Router()
 
 router.post('/register',register)
 router.post('/login',login)
-router.post('/forgotPassword',async(req,res)=>{
-    try {
-        const {email} = req.body;
-        console.log("email",email);
+router.post ('/forgotPassword', async(req,res)=>{
+    try{
+        const { email } = req.body;
+        console.log("email", email);
         if(!email){
             throw new Error("Email is required")
         }
-        const otpValue = generateOtp();
 
-        const newOtp = await Otp.create({
+        const otp = generateOtp();
+
+        const doesExist = await Otp.findOne({email})
+        
+        let newOtp;
+
+        if (!doesExist) {
+            newOtp = await Otp.create({
             email: email,
-            otp: otpValue
+            otp: otp
+            });
+        } else {
 
-        })
-        sendMail(email, otpValue)
+            newOtp = await Otp.findOneAndUpdate({email},{
+            otp: otp,
+            createdAt: new Date(),
+            },
+            {
+                new: true
+            })
+        }
 
-        res.send(newOtp)
-    }catch(error){
-        console.log(error.message)
-        res.send(error.message)
+        sendMail(email, otp);
+        res.send(newOtp);
+    } catch (error){
+        console.log(error.message);
+        res.send(error.message);
     }
 })
+// router.post('/forgotPassword',async(req,res)=>{
+//     try {
+//         const {email} = req.body;
+//         console.log("email",email);
+//         if(!email){
+//             throw new Error("Email is required")
+//         }
+//         const otpValue = generateOtp();
+
+//         const newOtp = await Otp.create({
+//             email: email,
+//             otp: otpValue
+
+//         })
+//         sendMail(email, otpValue)
+
+//         res.send(newOtp)
+//     }catch(error){
+//         console.log(error.message)
+//         res.send(error.message)
+//     }
+// })
 
 router.post("/verify-otp",async(req,res)=>{
     try {
