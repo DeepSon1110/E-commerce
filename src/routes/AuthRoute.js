@@ -66,6 +66,9 @@ import {
 } from "../controllers/authController.js";
 import User from "../models/User.js";
 
+import bcrypt from 'bcrypt'
+
+
 const router = express.Router();
 
 router.use(express.json());
@@ -89,11 +92,9 @@ router.post("/reset-password", async (req, res) => {
       throw new Error("User does not exist");
     }
 
-    const data = await User.findOneAndUpdate(
-      { email },
-      { password },
-      { new: true }
-    );
+    const hashedPassword = await bcrypt.hash(password,10)
+    const data = await User.findOneAndUpdate({email},{password:hashedPassword},{new:true})
+
 
     res.status(200).json({
       message: "Password is updated",
