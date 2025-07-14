@@ -91,7 +91,6 @@ const verifyOtp = async ({ email, otp }) => {
 
   //optional
   await Otp.deleteOne({ email });
-
   return "Otp verified"
 };
 

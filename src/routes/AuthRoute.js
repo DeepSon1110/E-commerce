@@ -64,13 +64,45 @@ import {
   forgotPassword,
   verifyOtp,
 } from "../controllers/authController.js";
-
+import User from "../models/User.js";
 
 const router = express.Router();
 
+router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
 router.post("/register", register);
 router.post("/login", login);
 router.post("/forgotPassword", forgotPassword);
 router.post("/verify-otp", verifyOtp);
 
-export default router;
+router.post("/reset-password", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      throw new Error("Please fill all fields");
+    }
+
+    const doesExist = await User.findOne({ email });
+
+    if (!doesExist) {
+      throw new Error("User does not exist");
+    }
+
+    const data = await User.findOneAndUpdate(
+      { email },
+      { password },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "Password is updated",
+      data,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ message: error.message });
+  }
+});
+
+export default router;
