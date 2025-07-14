@@ -86,14 +86,18 @@ router.post("/reset-password", async (req, res) => {
       throw new Error("Please fill all fields");
     }
 
-    const doesExist = await User.findOne({ email });
+    const doesUserExist = await User.findOne({ email });
 
-    if (!doesExist) {
+    if (!doesUserExist) {
       throw new Error("User does not exist");
     }
 
+    if(!doesUserExist.canChangePassword){
+        throw new Error("User cannot change password");
+    }
+
     const hashedPassword = await bcrypt.hash(password,10)
-    const data = await User.findOneAndUpdate({email},{password:hashedPassword},{new:true})
+    const data = await User.findOneAndUpdate({email},{password:hashedPassword,canChangePassword:false},{new:true})
 
 
     res.status(200).json({
