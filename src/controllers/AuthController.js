@@ -1,4 +1,4 @@
-import authService from "../services/authService.js";
+import authService from "../services/AuthService.js";
 import { createToken } from "../helpers/token.js";
 
 const register = async (req, res) => {
@@ -93,6 +93,8 @@ const login = async (req, res) => {
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
+
+    res.cookie("userEmail",email)
     if (!email) {
       throw new Error("Email is required");
     }
@@ -107,7 +109,9 @@ const forgotPassword = async (req, res) => {
 
 const verifyOtp = async (req, res) => {
   try {
-    const { email, otp } = req.body;
+    const {otp } = req.body;
+
+    const email = req.cookies.userEmail;
 
     const data = await authService.verifyOtp({ email, otp });
     res.status(200).json({ data });

@@ -90,12 +90,14 @@ const verifyOtp = async ({ email, otp }) => {
   }
 
   await User.findOneAndUpdate(
-    {email},{canChangePassword},{new:true}
-  )
+    { email },
+    { otpExpiresAt: new Date(Date.now() + 30 * 1000) },
+    { new: true }
+  );
 
   //optional
   await Otp.deleteOne({ email });
-  return "Otp verified"
+  return "Otp verified";
 };
 
 export default { register, login, forgotPassword, verifyOtp };
