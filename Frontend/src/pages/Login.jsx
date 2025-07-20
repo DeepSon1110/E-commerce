@@ -2,15 +2,28 @@ import { useState } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(""); // <-- Add this
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can handle login here
+    try {
+      const res = await fetch("http://localhost:4000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert("Login successful!");
+        // Optionally redirect or set user state here
+      } else {
+        alert(data.message || "Login failed");
+      }
+    } catch (error) {
+      alert("An error occurred. Please try again.");
+    }
   };
-
-  console.log("email", email);
-  console.log("password", password);
 
   return (
     <>
