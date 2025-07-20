@@ -54,6 +54,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(FormData)
     try {
       const res = await fetch("http://localhost:4000/api/auth/register", {
         method: "POST",
@@ -65,11 +66,10 @@ const Register = () => {
         alert("Registration successful!");
         // Optionally redirect to login page
       } else {
-        alert(data.message);
+        alert(data.message || "Registration failed");
       }
-    } catch (error) {
-      console.error("Error during registration:", error);
-      alert("An error occurred. Please try again later.");
+    } catch (err) {
+      alert("Something went wrong");
     }
   };
 
