@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TextField from "../components/TextField.jsx";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +17,6 @@ const Login = () => {
       const data = await res.json();
       if (res.ok) {
         alert("Login successful!");
-        // Optionally redirect or set user state here
       } else {
         alert(data.message || "Login failed");
       }
@@ -26,44 +26,55 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className="h-screen flex flex-col items-center justify-center">
-        <div>Login</div>
-        <div>
-          <form
-            onSubmit={handleSubmit}
-            className="p-4 border flex flex-col gap-4 items-start"
-          >
-            {/* Email */}
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                id="email"
-                placeholder="example@gmail.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-md w-full space-y-8">
+        <div className="text-center">
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+            Sign in to your account
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Welcome back! Please login to continue.
+          </p>
+        </div>
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <TextField
+              label="Email"
+              id="email"
+              placeholder="example@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+            />
+            <TextField
+              label="Password"
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+            />
+            <button
+              type="submit"
+              className="w-full py-3 px-4 rounded-md text-white bg-indigo-600 hover:bg-indigo-700 font-medium transition duration-200"
+            >
+              Login
+            </button>
+            <div className="text-center">
+              <p className="text-sm text-gray-600">
+                Don't have an account?{" "}
+                <a
+                  href="/register"
+                  className="font-medium text-indigo-600 hover:text-indigo-500 transition duration-200"
+                >
+                  Register here
+                </a>
+              </p>
             </div>
-
-            {/* Password */}
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                placeholder=""
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            {/* Submit button */}
-            <button type="submit">Submit</button>
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
