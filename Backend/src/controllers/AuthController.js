@@ -35,15 +35,14 @@ const register = async (req, res) => {
   }
 };
 
+// Example login controller
 const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ message: "User credential is missing" });
+  }
+
   try {
-    //login function
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      throw new Error("User credential is missing.");
-    }
-
     const data = await authService.login({ email, password });
 
     const payload = {
