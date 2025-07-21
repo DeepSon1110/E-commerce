@@ -31,7 +31,7 @@ app.get('/',(req,res)=>{
 
 app.use('/api/user',userRoutes )
 app.use("/api/product",productRoutes)
-app.use("/api/auth",AuthRoute)
+app.use("/api/auth", AuthRoute);
 
 
 
