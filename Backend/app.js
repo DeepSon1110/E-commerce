@@ -22,6 +22,14 @@ app.use(cors({
 
 connectDb()
 
+app.get("/test",(req,res)=>{
+    res.cookie("name","name",{
+        httpOnly: true,
+        maxAge: 1000*60*10
+    })
+    res.status(200).send("<b><a style = 'color: white; background : black ; padding : 2px'>Hello</a>,Welcome to my app !</b>")
+})
+
 app.get('/',(req,res)=>{
     res.status(200).json({
         message : " get from app.js"
