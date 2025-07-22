@@ -36,6 +36,13 @@ app.get('/',(req,res)=>{
     })
 })
 
+app.get("api/clear-cookie",(req,res)=>{
+    res.clearCookie("name",{
+        httpOnly: true,
+        maxAge: 1000*60*10
+    })
+    res.status(200).send("cookie cleared")
+})
 
 app.use('/api/user',userRoutes )
 app.use("/api/product",productRoutes)

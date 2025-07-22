@@ -8,6 +8,16 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const handleSaveCookie = async () => {
+    try {
+      await axios.get("http://localhost:4000/test", {
+        withCredentials: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const registerField = [
     {
       id: "userName",
