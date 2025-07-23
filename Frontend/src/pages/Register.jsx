@@ -1,23 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextField from "../components/TextField.jsx";
 
 const Register = () => {
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState(JSON.parse(localStorage.getItem("name"))|| "");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  useEffect(()=>{
+    setUserName(JSON.parse(localStorage.getItem("name")) || "")
+    localStorage.setItem("authTokem","1234567890abcdefg")
+    localStorage.setItem("email","pr@gmail.com")
+  })
+
   const handleSaveCookie = async () => {
-    try {
-      await axios.get("http://localhost:4000/test", {
-        withCredentials: true,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    Cookies.set("name","pravesh")
+    localStorage.setItem("name","sandip")
   };
 
+  const handleClearCookie = () =>{
+    localStorage.removeItem("name")
+  }
+
+  const clearAll = () =>{
+    localStorage.clear();
+  }
   const registerField = [
     {
       id: "userName",
