@@ -22,16 +22,13 @@ const register = async (req, res) => {
       password: password,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       message: "User registered successful",
       data,
     });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json({
-      message: "Error occured to register",
-      error: error.message,
-    });
+    console.error(error); 
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 

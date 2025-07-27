@@ -11,15 +11,20 @@ const Register = () => {
     e.preventDefault();
     console.table(formData);
 
-    const response = await handlePostOperation("/auth/register", formData);
+    try {
+      const response = await handlePostOperation("/auth/register", formData);
 
-    console.log(response);
+      console.log(response);
 
-    if (response.status === 201) {
-      alert("User registered Sucessfully!");
-      setFormData(registerInitialValue);
-    } else {
-      alert("User registration failed!");
+      if (response.status === 201) {
+        alert("User registered Sucessfully!");
+        setFormData(registerInitialValue);
+      } else {
+        alert("User registration failed!");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred. Please try again later.");
     }
   };
 
