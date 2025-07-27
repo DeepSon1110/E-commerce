@@ -1,11 +1,11 @@
 const BASE_URL = "http://localhost:4000/api";
 
-const registerInitialValue ={
-    userName: "", 
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phone: ""
-}
+const registerInitialValue = {
+  email: "",
+  password: "",
+  userName: "",
+  phone: "",
+  confirmPassword: "",
+};
 
-export { BASE_URL, registerInitialValue }
+export { BASE_URL, registerInitialValue };

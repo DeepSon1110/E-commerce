@@ -1,17 +1,26 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from "react-router-dom";
+import { navbarFields } from "../config/navbarFields";
 
 const Navbar = () => {
-  return (
-   <nav className='flex md:justify-center justify-between lg:justify-around border-2 border-gray-500 px-6 flex-wrap bg-red-500 md:bg-green-400'>
-    <Link to= {"/login"}>Login</Link>
-    <Link to= {"/"}>Home</Link>
-    <Link to= {"/register"}>Register</Link>
-    <Link to= {"/forgot-password"}>ForgotPassword</Link>
-    <Link to= {"/reset-password"}>ResetPassword</Link>
-    <Link to= {"/verify-otp"}>VerifyOtp</Link>
-   </nav>
-  )
-}
+  const location = useLocation();
 
-export default Navbar
+  return (
+    <nav className="flex gap-3 md:justify-center justify-between lg:justify-around border-2 border-gray-400 px-6 py-2 flex-wrap bg-red-500 md:bg-green-400">
+      {navbarFields.map(({ name, pathname }) => (
+        <Link
+          key={name}
+          to={pathname}
+          className={`${
+            location.pathname === pathname
+              ? "font-bold bg-white text-black rounded"
+              : "text-white"
+          } px-2 py-1`}
+        >
+          {name}
+        </Link>
+      ))}
+    </nav>
+  );
+};
+
+export default Navbar;

@@ -1,27 +1,34 @@
-import React from "react";
-
 const TextField = ({
   label = "TextField",
   onChange,
+  name,
   id,
   placeholder = "placeholder",
   value,
   required = false,
   type = "text",
+  autoFocusOn = "email",
+  maxLength = 40,
 }) => {
   return (
-    <div className="flex flex-col gap-1 w-full">
-      <label htmlFor={id} className="text-sm font-medium text-gray-700 mb-1">
-        {label}
+    <div className="flex flex-col gap-1">
+      <label htmlFor={id} className="text-sm text-gray-700">
+        {label} {required && "*"}
       </label>
       <input
-        className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition w-full"
+        className="auth-input"
         type={type}
+        inputMode={type === "number" ? "numeric" : "text"}
+        name={name}
         id={id}
+        pattern={type === "number" && "d*"}
+        // autoComplete="off"
         placeholder={placeholder}
         value={value}
+        autoFocus={id === autoFocusOn}
         required={required}
         onChange={onChange}
+        maxLength={maxLength}
       />
     </div>
   );

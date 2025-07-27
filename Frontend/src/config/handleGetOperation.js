@@ -1,11 +1,12 @@
 import axios from "axios";
 import { BASE_URL } from "./constants";
 
-export const handlePostOperation = async (url, data) => {
+export const handleGetOperation = async (url) => {
   try {
-    const result = await axios.post(`${BASE_URL}${url}`, data, {
+    const result = await axios.get(`${BASE_URL}${url}`, {
       withCredentials: true,
     });
+
     return result;
   } catch (error) {
     return error;
