@@ -1,6 +1,6 @@
 import React ,{useEffect,useState} from 
 
-const ProtectedRoute = ({childern,redirect}) =>{
+const ProtectedRoute = ({childern,condition,redirect}) =>{
     const navigate = useNavigate();
 
     const [isvalid,setIsvalid] = useState(false);

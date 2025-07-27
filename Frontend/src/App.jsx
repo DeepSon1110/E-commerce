@@ -9,6 +9,7 @@ import ResetPassword from "./pages/ResetPassword";
 
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
+import pageA from "./pages/PageA"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Toaster position="top-right" />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/a" element={<pageA />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-otp" element={<VerifyOtp />} />
