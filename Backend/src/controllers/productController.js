@@ -1,100 +1,109 @@
-import productServices from "../services/productServices.js";
+import productService from '../services/productServices.js'
 
-//create product
 const createProduct = async (req, res) => {
-  try {
-    const product = req.body;
 
+  if (!req.file) {
+    return res.status(400).send("Image file is required");
+  }
+  console.log(req.file);
+
+  const filepath = req.file.path;
+  const filename = req.file.filename;
+
+
+
+  const product = req.body;
+
+  product.imageUrl = filepath;
+  product.imageName = filename;
+
+  try {
     if (!product) {
-      return res.status(400).send({ message: "Product is required" });
+      return res.status(400).send("Product data is required");
     }
 
     if (!product.price) {
-      return res.status(400).send({ message: "Price is required" });
+      return res.status(400).send("Product price is required");
     }
 
-    const data = await productServices.createProduct(product);
+    const data = await productService.createProduct(product);
 
     res.status(200).json({
       message: "Product created successfully",
-      data,
+      data: data,
     });
-  } catch (err) {
-    console.log(err.message);
-    res.status(501).send("error occurs to create product");
+  } catch (error) {
+    console.log(error.message);
+    res.status(501).send("error occurred to create product");
   }
 };
 
-//get all product
-const getAllProduct = async (req, res) => {
+const getAllProducts = async (req, res) => {
   try {
 
     console.log(req.query)
-    const data = await productServices.getAllProduct(req.query);
+
+    const data = await productService.getAllProducts(req.query);
 
     res.status(200).json({
-      message: "Product retrieved successfully",
+      message: "All products fetched successfully",
       data,
     });
-  } catch (err) {
-    console.log(err.message);
-    res.status(400).send("error occurs to get product");
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send("Error occurred while fetching products");
   }
 };
 
-//get single product by id
 const getProductById = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await productServices.getProductById(id);
 
+    const data = await productService.getProductById(id);
     res.status(200).json({
-      message: "product fetch successfully",
+      message: "Product fetched successfully",
       data,
     });
-  } catch (err) {
-    console.log(err.message);
-    res.status(400).send("error occurs to get product");
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send("Error occurred while fetching product");
   }
 };
 
-//delete product by id
-const deleteProduct = async (req, res) => {
+const deleteProductById = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await productServices.deleteProduct(id);
+    const data = await productService.deleteProductById(id);
 
     res.status(200).json({
-      message: "product deleted successfully",
+      message: "Product deleted successfully",
+      data,
     });
-  } catch (err) {
-    console.log(err.message);
-    res.status(400).send("error occurs to delete product");
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send("Error occurred while deleting product");
   }
 };
 
-//update product
-const updateProduct = async (req, res) => {
+const updateProductById = async (req, res) => {
   try {
-    const id = req.params.id;
+    const productId = req.params.id;
     const product = req.body;
 
-    const data = await productServices.updateProduct(id, product);
-
+    const data = await productService.updateProductById(product, productId);
     res.status(200).json({
-      message: "product updated successfully",
+      message: "Product updated successfully",
       data,
     });
-  } catch (err) {
-    console.log(err.message);
-    res.status(400).send("error occurs to update product");
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send("Error occurred while updating product");
   }
 };
-
 export {
   createProduct,
-  getAllProduct,
+  getAllProducts,
   getProductById,
-  deleteProduct,
-  updateProduct,
+  deleteProductById,
+  updateProductById,
 };

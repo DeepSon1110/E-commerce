@@ -1,25 +1,29 @@
 import express from 'express';
-import { createProduct, deleteProduct, getAllProduct, getProductById, updateProduct } from "../controllers/productController.js";
+import {
+  createProduct,
+  deleteProductById,
+  getAllProducts,
+  getProductById,
+  updateProductById
+} from "../controllers/productController.js";
 import { isLoggedIn } from '../middleware/isLoggedIn.js';
 import { isAdmin } from '../middleware/isAdmin.js';
 
 const router = express.Router();
 
 //create product
-router.post('/createProduct',isLoggedIn,isAdmin,createProduct)
+router.post('/createProduct', isLoggedIn, isAdmin, createProduct);
 
+//get all products
+router.get('/getAllProduct', getAllProducts);
 
-//getallProducts
-router.get('/getAllProduct',getAllProduct)
+//get product by id
+router.get('/getProductById/:id', getProductById);
 
-//getProductById
-router.get('/getProductById/:id', getProductById)
+//delete product
+router.delete('/deleteProduct/:id', isLoggedIn, isAdmin, deleteProductById);
 
-//deleteProduct
-router.delete('/deleteProduct/:id',isLoggedIn,isAdmin,deleteProduct)
-
-//updateProduct
-router.put('/updateProduct/:id',isLoggedIn,isAdmin,updateProduct)
-
+//update product
+router.put('/updateProduct/:id', isLoggedIn, isAdmin, updateProductById);
 
 export default router;
