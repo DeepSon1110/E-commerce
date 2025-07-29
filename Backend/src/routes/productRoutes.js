@@ -8,11 +8,13 @@ import {
 } from "../controllers/productController.js";
 import { isLoggedIn } from '../middleware/isLoggedIn.js';
 import { isAdmin } from '../middleware/isAdmin.js';
+import { upload } from '../config/cloudinary.js';
+
 
 const router = express.Router();
 
 //create product
-router.post('/createProduct', isLoggedIn, isAdmin, createProduct);
+router.post('/createProduct', upload.single("image"), createProduct);
 
 //get all products
 router.get('/getAllProduct', getAllProducts);
