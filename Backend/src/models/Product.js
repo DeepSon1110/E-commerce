@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
 
-    productDesctription: {
+    productDescription: {
         type: String,
     },
     price: {
@@ -34,7 +34,7 @@ const productSchema = new mongoose.Schema({
     },  
     stock: {
         type: Number,
-        deafult: 0
+        default: 0
     },
     imageUrl: {
         type: String
@@ -48,11 +48,11 @@ const productSchema = new mongoose.Schema({
     },
     isActive: {
         type: Boolean,
-        deafult: true
+        default: true
     },
     rating:{
         type: Number,
-        defaul: 0
+        default: 0
     }
 },{
     timestamps: true 
