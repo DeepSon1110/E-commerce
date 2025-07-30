@@ -1,4 +1,5 @@
 import Product from "../models/Product.js";
+import { v2 as cloudinary } from "cloudinary";
 
 //create product
 const createProduct = async (data) => {
@@ -33,18 +34,40 @@ const getProductById = async (id) => {
 
 //delete product by id
 const deleteProduct = async (id) => {
-  const product = await Product.findOne({_id:id})
-  const imageName = product.imageName
-  await cloudinary.uploader.destroy(imageName)
-  return await Product.deleteOne({_id:id});
+  try {
+    const product = await Product.findOne({_id:id});
+    if (!product) {
+      throw new Error("Product not found");
+    }
+    
+    // Delete image from cloudinary if it exists
+    if (product.imageName) {
+      await cloudinary.uploader.destroy(product.imageName);
+    }
+    
+    return await Product.deleteOne({_id:id});
+  } catch (error) {
+    throw error;
+  }
 };
 
 //update product
 const updateProduct = async (id, data) => {
-  const product = await Product.findById(id)
-  const oldImageName = product.imageName
-  await cloudinary.uploader.destroy(oldImageName)
-  return await Product.findByIdAndUpdate(id, data, { new: true });
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    // If new image is uploaded, delete old image from cloudinary
+    if (data.imageName && product.imageName) {
+      await cloudinary.uploader.destroy(product.imageName);
+    }
+    
+    return await Product.findByIdAndUpdate(id, data, { new: true });
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default {
