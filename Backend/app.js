@@ -3,6 +3,7 @@ import express from 'express';
 import connectDb from './src/config/db.js';
 import userRoutes from './src/routes/userRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
+import orderRoute from './src/routes/orderRoute.js';
 import AuthRoute from './src/routes/AuthRoute.js';
 import cookieParser from 'cookie-parser';
 import cors from "cors";
@@ -47,6 +48,7 @@ app.get("api/clear-cookie",(req,res)=>{
 app.use('/api/user',userRoutes )
 app.use("/api/product",productRoutes)
 app.use("/api/auth", AuthRoute);
+app.use("/api/order",orderRoute)
 
 
 

@@ -1,4 +1,5 @@
-import mongoose from mongoose;
+import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 const orderSchema = new mongoose.Schema({
     user : {
@@ -40,8 +41,10 @@ const orderSchema = new mongoose.Schema({
         type : String,
         enum : ['cod','khalti']
     }
-
+}, {
+    timestamps: true
 })
+
 const Order = mongoose.model ('Order',orderSchema)
 
 export default Order;
