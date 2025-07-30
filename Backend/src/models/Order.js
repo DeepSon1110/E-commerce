@@ -26,7 +26,21 @@ const orderSchema = new mongoose.Schema({
     },
     phone : {
         type : String
+    },
+    orderStatus :{
+        type : String,
+        enum : ['pending','confirmed','shipping','delivered','cancelled']
+    },
+    paymentStatus : {
+        type : String,
+        enum : ['paid','notPaid'],
+        default : 'notPaid'
+    },
+    paymentMethod :{
+        type : String,
+        enum : ['cod','khalti']
     }
+
 })
 const Order = mongoose.model ('Order',orderSchema)
 
