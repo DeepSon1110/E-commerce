@@ -8,6 +8,13 @@ const createOrder = async(order)=>{
 };
 
 
+//get Order
+const getOrder = async(id)=>{
+    const result = await Order.findById(id).populate("product")
+    return result;
+    
+}
+
 export default {
     createOrder
 }
