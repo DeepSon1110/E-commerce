@@ -25,4 +25,19 @@ const createOrder = async (req,res)=>{
     }
 }
 
+const getOrderByUserId = async(req,res)=>{
+    try{
+        const userId = req.user.id
+        const data = await orderService.getOrderByUserId(userId)
+        res.status(200).json({
+            message : "User order fetched successfully",
+            data
+        })
+    }
+    catch(error){
+        console.log(error.message)
+        res.status(400).json({error : error.message,message : "error to fetch user order"})
+    }
+}
+
 export {createOrder}
