@@ -10,7 +10,7 @@ router.post('/createOrder', isLoggedIn, createOrder)
 router.get('/getOrderById/:id', isLoggedIn, getOrderById)
 
 // Get all orders for logged-in user
-router.get('/getOrderByUserId', isLoggedIn, getOrderByUserId)
+router.get('/getOrderByUserId/:id', isLoggedIn, getOrderByUserId)
 
 // Update order status
 router.put('/updateOrderStatus/:id', isLoggedIn, updateOrderStatus)
@@ -18,6 +18,6 @@ router.put('/updateOrderStatus/:id', isLoggedIn, updateOrderStatus)
 // Update payment status
 router.put('/updatePaymentStatus/:id', isLoggedIn, updatePaymentStatus)
 
-//
+
 
 export default router
