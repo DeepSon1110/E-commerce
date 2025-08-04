@@ -40,6 +40,10 @@ const orderSchema = new mongoose.Schema({
     paymentMethod :{
         type : String,
         enum : ['cod','khalti']
+    },
+    totalAmount:{
+        type : Number,
+        required : true
     }
 }, {
     timestamps: true
