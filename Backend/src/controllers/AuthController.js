@@ -51,7 +51,7 @@ const login = async (req, res) => {
     };
 
     //Webtoken generation
-    // const token = jwt.sign(payload, "secretkey")
+    
     const token = createToken(payload);
     res.cookie("authToken", token);
 
