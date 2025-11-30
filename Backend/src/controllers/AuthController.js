@@ -36,7 +36,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ message: "User credential is missing" });
+    return res.status(400).json({ message: "User credential is missing, please fill it out" });
   }
 
   try {
@@ -55,7 +55,7 @@ const login = async (req, res) => {
     const token = createToken(payload);
     res.cookie("authToken", token);
 
-    res.status(200).json({
+    res.status(201).json({
       message: "Login successful",
       data,
       token,
